@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="6099bf4a-38b4-42b2-83a2-04f8f2b8a8bd" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="sampleapiFlow" doc:id="484fe063-7f76-449a-85ae-94568a8e3bcb">
+		<http:listener doc:name="Listener" doc:id="a9986a79-9495-467c-bb79-2bd4ba37487d" config-ref="HTTP_Listener_config" path="/sampleapi" />
+		<logger level="INFO" doc:name="Logger" doc:id="712d3f6f-afe7-4a1c-b94a-660052ed94c5" message='#["first logger"]'/>
+		<flow-ref doc:name="Flow Reference" doc:id="44785ac8-f627-4466-804c-f05a93203157" name="sampleapiSub_Flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="2eb535a1-912b-4058-9821-0bbeadf246d4" message='#["Mainflow logger"]' />
+		<flow-ref doc:name="Flow Reference" doc:id="5e4dfd81-be8c-492b-bcfd-aef9136782cb" name="sampleapiFlow1"/>
+		<logger level="INFO" doc:name="Logger" doc:id="77c5fd16-e8ab-4a42-81dc-2d9c5c65f4a8" message='#["flow ends"]'/>
+	</flow>
+	<flow name="sampleapiFlow1" doc:id="fd35efd0-d0ac-4bae-986c-c12760815126" >
+		<logger level="INFO" doc:name="Logger" doc:id="fd13c61a-4bff-4a39-b906-b3f5c087319f" message='#["Inside private flow"]'/>
+	</flow>
+	<sub-flow name="sampleapiSub_Flow" doc:id="2362abac-987f-4ec6-a23f-05fec84b6203" >
+		<logger level="INFO" doc:name="Logger" doc:id="0354019a-448d-4b1a-80fe-32e2f9376d19" message='#["Inside second flow"]'/>
+	</sub-flow>
+</mule>
